@@ -35,6 +35,30 @@ contract SimpleBank {
     /* Create an event called LogWithdrawal */
     /* Add 3 arguments for this event, an accountAddress, withdrawAmount and a newBalance */
     event LogWithdrawal(address accountAddress, uint withdrawAmount, uint newBalance);
+    
+    //
+    // Modifiers
+    //
+
+    // @notice onlyEnrolled
+    // Ensures the msg.sender has already been enrolled before executing a function
+    modifier onlyEnrolled {
+        require(
+            enrolled[msg.sender] == true,
+            "Only enrolled accounts can call this function."
+        );
+        _;
+    }
+
+    // @notice notEnrolled
+    // Ensures the msg.sender has not already been enrolled before executing a function
+    modifier notEnrolled {
+        require(
+            enrolled[msg.sender] == false,
+            "Only accounts not enrolled can call this function."
+        );
+        _;
+    }
 
     //
     // Functions
